@@ -8,16 +8,16 @@ class AbstractParser(ABC):
         self.product_name = product_name
         self.driver = driver
 
-    def parse_template(self):
+    def parse_template(self) -> dict:
         self.link = self.prepare_link()
         self.get_page()
-        self.parse_page()
+        return self.parse_page()
 
     def get_page(self):
         self.driver.get(self.link)
 
     @abstractmethod
-    def prepare_link(self):
+    def prepare_link(self) -> str:
         pass
 
     @abstractmethod

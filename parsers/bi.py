@@ -1,6 +1,7 @@
 from bs4 import BeautifulSoup
 
 from .abstract import AbstractParser
+from .helpers import get_number_from_string
 
 
 class BiParser(AbstractParser):
@@ -12,9 +13,7 @@ class BiParser(AbstractParser):
         return self.SEARCH_PAGE + product_name
 
     def parse_page(self):
-        """Parses bi page"""
-
-        print('parsing BI')
+        price, old_price = '', ''
         soup = BeautifulSoup(self.driver.page_source, "html5lib")
     
         try:
@@ -26,20 +25,26 @@ class BiParser(AbstractParser):
                 print("title:", title.get_text())
     
                 link = item_wrapper.find(class_='goodsItemLink')
-                print(self.DOMAIN + link.attrs.get('href', ''))
-    
                 price_tag = item_wrapper.find('p', class_='costIco')
     
                 if price_tag is not None:
-                    print("Current price", price_tag.get_text())
-                    old_price = price_tag.find_next_sibling(class_='old')
-                    if old_price is not None and old_price.get_text() != "":
-                        print("slaaay, there is a discount, old price is", old_price.get_text())
-                else:
-                    if item_wrapper.find(string='Повідомити про наявність') is not None:
-                        print('Item is unavailable')
+                    price = price_tag.get_text()
+                    old_price_tag = price_tag.find_next_sibling(class_='old')
+                    if old_price_tag is not None:
+                        old_price = old_price_tag.get_text()
+
+                is_available = item_wrapper.find(string='Повідомити про наявність') is None
+
+                return {
+                    'price': get_number_from_string(price),
+                    'old_price': get_number_from_string(old_price),
+                    'is_available': is_available,
+                    'link': self.DOMAIN + link.attrs.get('href', '')
+                }
             else:
                 print('No main wrapper found, outdated logic')
+                return None
         except AttributeError:
             print("error during parsing")
+            return None
 
