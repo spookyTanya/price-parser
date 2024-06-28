@@ -101,7 +101,5 @@ class ComfyParser(AbstractParser):
         soup = BeautifulSoup(self.driver.page_source, 'html5lib')
 
         modal = soup.find('div', class_='q-dialog')
-        print('modal', modal, self.driver.page_source)
         if modal is not None:
-            print(modal.find(class_='br-recom__close-btn'))
             modal.find(class_='br-recom__close-btn').click()
