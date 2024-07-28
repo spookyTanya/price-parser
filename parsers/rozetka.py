@@ -15,6 +15,7 @@ class RozetkaParser(AbstractParser):
     def check_redirect(self):
         return self.SEARCH_PAGE_URL not in self.driver.current_url
 
+    # todo: get the cheapest product?
     def parse_search_page(self):
         price, old_price = '', ''
         soup = BeautifulSoup(self.driver.page_source, "html5lib")
@@ -23,8 +24,6 @@ class RozetkaParser(AbstractParser):
             item_wrapper = soup.find(class_='goods-tile')
 
             if item_wrapper is not None:
-                # title = item_wrapper.find(class_='goods-tile__title')
-
                 link = item_wrapper.find(class_='product-link').attrs.get('href', '')
 
                 price_tag = item_wrapper.find(class_='goods-tile__price-value')
