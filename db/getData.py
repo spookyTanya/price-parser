@@ -13,6 +13,18 @@ def get_website_products(product_id: int) -> list:
     return row
 
 
+def get_website_product(product_id: int, website: str) -> list:
+    con = sqlite3.connect("parsing.db")
+    cur = con.cursor()
+
+    query = 'SELECT id FROM WebSiteProducts WHERE product_id=? and website=?'
+    cur.execute(query, [product_id, website])
+
+    row = cur.fetchone()
+    con.close()
+    return row
+
+
 def get_products() -> list:
     con = sqlite3.connect("parsing.db")
     cur = con.cursor()

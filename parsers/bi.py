@@ -57,9 +57,6 @@ class BiParser(AbstractParser):
             item_wrapper = soup.find(class_='mainWR')
 
             if item_wrapper is not None:
-                title = item_wrapper.find('h1', itemprop='name')
-                print("title:", title.get_text())
-
                 price_tag = item_wrapper.find('p', itemprop='price')
 
                 if price_tag is not None:

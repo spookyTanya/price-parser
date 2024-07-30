@@ -34,7 +34,6 @@ class ComfyParser(AbstractParser):
 
             if item_wrapper is not None:
                 title = item_wrapper.find(class_='products-list-item__name')
-                print("title:", title.get_text())
 
                 price_tag = item_wrapper.find(class_='products-list-item__actions-price-current')
 
@@ -70,9 +69,6 @@ class ComfyParser(AbstractParser):
             item_wrapper = soup.find(class_='general-tab')
 
             if item_wrapper is not None:
-                title = item_wrapper.find(class_='gen-tab__name')
-                print("title:", title.get_text())
-
                 price_tag = item_wrapper.find(class_='price__current')
 
                 if price_tag is not None:

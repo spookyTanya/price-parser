@@ -58,9 +58,6 @@ class RozetkaParser(AbstractParser):
             item_wrapper = soup.find(class_='product-about')
 
             if item_wrapper is not None:
-                # title = item_wrapper.find('h1')
-                # print(title)
-
                 link = item_wrapper.find(class_='product-link').attrs.get('href', '')
 
                 price_tag = item_wrapper.find(class_='product-price__big')

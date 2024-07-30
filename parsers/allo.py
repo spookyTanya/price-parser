@@ -25,7 +25,6 @@ class AlloParser(AbstractParser):
 
             if item_wrapper is not None:
                 title = item_wrapper.find(class_='product-card__title')
-                # compare title with product name?
 
                 price_tag = item_wrapper.find(class_='v-pb__cur')
                 if price_tag is not None:
@@ -36,6 +35,7 @@ class AlloParser(AbstractParser):
 
                 is_available = item_wrapper.find(string='Немає в наявності') is None
 
+                print("price", price)
                 return {
                     'price': get_number_from_string(price),
                     'old_price': get_number_from_string(old_price),

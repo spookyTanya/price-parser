@@ -3,7 +3,7 @@ import matplotlib.pyplot as plt
 import seaborn as sns
 
 
-def process_results(results):
+def new_product_chart(results):
     print(results)
     df = pd.DataFrame.from_records(results)
     print('min price = ', df['price'].min())
@@ -19,14 +19,23 @@ def process_results(results):
     plt.show()
 
 
-def process_statistics():
-    df = pd.read_csv("test2.csv")
+def saved_product_chart(statistics):
+    df = pd.DataFrame.from_records(statistics)
     df.set_index('date', inplace=True)
-    # grouped = df.groupby('website')
+    grouped = df.groupby('website')
 
-    # print(grouped)
-    df.plot('')
+    plt.figure(figsize=(12, 6))
+    styles = ['-', '--', '-.', ':']
+    markers = ['o', 's', '^', 'D', 'v', '<', '>', 'p']
+
+    for (website, data), style, marker in zip(grouped, styles, markers):
+        plt.plot(data.index, data['price'], label=website, linestyle=style, marker=marker, alpha=0.7)
+
+    plt.title('Prices for All Websites')
+    plt.xlabel('Date')
+    plt.ylabel('Price')
+    plt.ylim(ymin=0, ymax=df['price'].max() + 200)
+    plt.legend(title='Website')
+    plt.grid(True)
     plt.show()
 
-
-# process_statistics()

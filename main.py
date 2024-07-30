@@ -1,5 +1,6 @@
 import db
 from processingHandlers import process_new_product, process_existing_product, get_product_statistics
+from charts import saved_product_chart
 
 products = []
 product_ids = []
@@ -47,14 +48,16 @@ if __name__ == '__main__':
 
             case "b" | "B":
                 product_id = get_product_id_from_input()
-                product = products[product_ids.index(product_id)]
-                process_existing_product(product)
+                if product_id is not None:
+                    product = products[product_ids.index(product_id)]
+                    process_existing_product(product)
 
             case "c" | "C":
                 product_id = get_product_id_from_input()
-                product = products[product_ids.index(product_id)]
-                stats = get_product_statistics(product)
-                print(stats)
+                if product_id is not None:
+                    product = products[product_ids.index(product_id)]
+                    stats = get_product_statistics(product)
+                    saved_product_chart(stats)
 
             case "d" | "D":
                 process_new_product()
@@ -62,8 +65,9 @@ if __name__ == '__main__':
 
             case "e" | "E":
                 product_id = get_product_id_from_input()
-                db.delete_product(product_id)
-                load_products()
+                if product_id is not None:
+                    db.delete_product(product_id)
+                    load_products()
 
             case "f" | "F":
                 break

@@ -1,4 +1,3 @@
-import pandas as pd
 from selenium import webdriver
 from selenium.webdriver.chrome.service import Service as ChromeService
 from webdriver_manager.chrome import ChromeDriverManager
@@ -32,6 +31,7 @@ def parse_from_name(product_name):
 
 def process_new_product():
     product_name = input('Enter product name: ')
+
     results = parse_from_name(product_name)
 
     prod_id = db.add_product(product_name)
@@ -39,7 +39,7 @@ def process_new_product():
         website_product_id = db.add_website_product((prod_id, item.get('website')))
         db.add_statistic(website_product_id, item)
 
-    charts.process_results(results)
+    charts.new_product_chart(results)
 
 
 def process_existing_product(existing_product):
@@ -47,11 +47,12 @@ def process_existing_product(existing_product):
     results = parse_from_name(product_name)
 
     for item in results:
-        website_product_id = db.add_website_product((existing_product[0], item.get('website')))
-        db.add_statistic(website_product_id, item)
+        website_product_id = db.get_website_product(existing_product[0], item.get('website'))
+        db.add_statistic(website_product_id[0], item)
 
     old_stats = get_product_statistics(existing_product)
     print(old_stats)
+    charts.saved_product_chart(old_stats)
 
 
 def get_product_statistics(existing_product):

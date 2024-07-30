@@ -13,7 +13,7 @@ def add_product(product_name: str) -> int:
     return cur.lastrowid
 
 
-def add_website_product(website_product) -> int:
+def add_website_product(website_product: tuple) -> int:
     con = sqlite3.connect("parsing.db")
     cur = con.cursor()
 
