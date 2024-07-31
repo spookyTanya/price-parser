@@ -1,6 +1,7 @@
 import sqlite3
 from datetime import datetime
 
+
 def add_product(product_name: str) -> int:
     con = sqlite3.connect("parsing.db")
     cur = con.cursor()

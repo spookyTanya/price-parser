@@ -5,7 +5,7 @@ def create_db():
     con = sqlite3.connect("parsing.db")
     cur = con.cursor()
 
-    cur.execute('CREATE TABLE IF NOT EXISTS Products(id INTEGER PRIMARY KEY, name VARCHAR(100) NOT NULL)')
+    cur.execute('CREATE TABLE IF NOT EXISTS Products(id INTEGER PRIMARY KEY, name VARCHAR(100) NOT NULL UNIQUE)')
     cur.execute('''CREATE TABLE IF NOT EXISTS WebSiteProducts(
                        id INTEGER PRIMARY KEY,
                        product_id INTEGER NOT NULL,

@@ -29,8 +29,14 @@ def parse_from_name(product_name):
     return filtered_data
 
 
-def process_new_product():
+def process_new_product(products: list):
     product_name = input('Enter product name: ')
+
+    found = any(product_name == tup[1] for tup in products)
+
+    if found:
+        print("Product with same name is already saved")
+        return
 
     results = parse_from_name(product_name)
 
@@ -44,6 +50,11 @@ def process_new_product():
 
 def process_existing_product(existing_product):
     product_name = existing_product[1]
+
+    if db.get_parsing_results_by_product(existing_product[0]) is not None:
+        print('This product was already parsed today')
+        return
+
     results = parse_from_name(product_name)
 
     for item in results:
@@ -51,7 +62,6 @@ def process_existing_product(existing_product):
         db.add_statistic(website_product_id[0], item)
 
     old_stats = get_product_statistics(existing_product)
-    print(old_stats)
     charts.saved_product_chart(old_stats)
 
 

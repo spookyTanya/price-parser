@@ -4,9 +4,7 @@ import seaborn as sns
 
 
 def new_product_chart(results):
-    print(results)
     df = pd.DataFrame.from_records(results)
-    print('min price = ', df['price'].min())
 
     df_melted = df.melt(id_vars=['website', 'is_available'], value_vars=['price', 'old_price'],
                         var_name='Price Type', value_name='Value')

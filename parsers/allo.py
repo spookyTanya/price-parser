@@ -35,7 +35,6 @@ class AlloParser(AbstractParser):
 
                 is_available = item_wrapper.find(string='Немає в наявності') is None
 
-                print("price", price)
                 return {
                     'price': get_number_from_string(price),
                     'old_price': get_number_from_string(old_price),

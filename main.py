@@ -60,7 +60,7 @@ if __name__ == '__main__':
                     saved_product_chart(stats)
 
             case "d" | "D":
-                process_new_product()
+                process_new_product(products)
                 load_products()
 
             case "e" | "E":
